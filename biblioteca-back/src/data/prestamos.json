@@ -1,0 +1,24 @@
+[
+  {
+    "id": "pre-001",
+    "usuarioId": "usr-001",
+    "libroId": "lib-001",
+    "fechaPrestamo": "2026-10-05T03:42:53.314Z",
+    "fechaVencimiento": "2026-10-19T03:42:53.314Z",
+    "fechaDevolucion": null,
+    "diasRetraso": 0,
+    "multa": 0,
+    "estado": "activo"
+  },
+  {
+    "id": "pre-002",
+    "usuarioId": "usr-002",
+    "libroId": "lib-002",
+    "fechaPrestamo": "2026-10-02T03:42:53.314Z",
+    "fechaVencimiento": "2026-10-16T03:42:53.314Z",
+    "fechaDevolucion": null,
+    "diasRetraso": 0,
+    "multa": 0,
+    "estado": "activo"
+  }
+]

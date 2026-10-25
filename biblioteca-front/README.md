@@ -1,16 +1,25 @@
-# React + Vite
+# Entrelíneas · Biblioteca escolar
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Interfaz React 19 + Vite para el catálogo público y la gestión de una biblioteca. El API se inicia por separado en `biblioteca-back`.
 
-Currently, two official plugins are available:
+## Inicio
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+pnpm install
+pnpm dev
+```
 
-## React Compiler
+Por defecto, la interfaz se conecta a `http://localhost:3000/api`. Para usar otra URL, crea un archivo `.env` en `biblioteca-front`:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```env
+VITE_API_URL=http://localhost:3000/api
+```
 
-## Expanding the ESLint configuration
+## Validación
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+pnpm lint
+pnpm build
+```
+
+En la barra superior se puede alternar entre el panel de gestión y el catálogo público. El panel incluye altas/ediciones/bajas de libros y usuarios, registro de préstamos y devoluciones.

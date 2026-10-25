@@ -1,122 +1,94 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useCallback, useEffect, useState } from 'react';
+import { api } from './services/api';
+import LibrarianDashboard from './pages/LibrarianDashboard';
+import PublicCatalog from './pages/PublicCatalog';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [view, setView] = useState('management');
+  const [books, setBooks] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [loans, setLoans] = useState([]);
+  const [filters, setFilters] = useState({ titulo: '', autor: '', categoria: '', disponibilidad: '' });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  const refresh = useCallback(async () => {
+    setError('');
+    try {
+      const [nextBooks, nextUsers, nextLoans] = await Promise.all([
+        api.books.list(),
+        api.users.list(),
+        api.loans.list(),
+      ]);
+      setBooks(nextBooks);
+      setUsers(nextUsers);
+      setLoans(nextLoans);
+    } catch (loadError) {
+      setError(loadError.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    Promise.all([api.books.list(), api.users.list(), api.loans.list()])
+      .then(([nextBooks, nextUsers, nextLoans]) => {
+        if (cancelled) return;
+        setBooks(nextBooks);
+        setUsers(nextUsers);
+        setLoans(nextLoans);
+      })
+      .catch((loadError) => {
+        if (!cancelled) setError(loadError.message);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => { cancelled = true; };
+  }, []);
+
+  const refreshAfter = useCallback(async (operation) => {
+    const result = await operation;
+    await refresh();
+    return result;
+  }, [refresh]);
+
+  const actions = {
+    refresh,
+    createBook: (book) => refreshAfter(api.books.create(book)),
+    updateBook: (id, book) => refreshAfter(api.books.update(id, book)),
+    deleteBook: (id) => refreshAfter(api.books.remove(id)),
+    createUser: (user) => refreshAfter(api.users.create(user)),
+    updateUser: (id, user) => refreshAfter(api.users.update(id, user)),
+    deleteUser: (id) => refreshAfter(api.users.remove(id)),
+    createLoan: (loan) => refreshAfter(api.loans.create(loan)),
+    returnLoan: (id) => refreshAfter(api.loans.returnBook(id)),
+  };
+
+  const catalogBooks = books.filter((book) => (
+    book.titulo.toLocaleLowerCase().includes(filters.titulo.toLocaleLowerCase())
+    && book.autor.toLocaleLowerCase().includes(filters.autor.toLocaleLowerCase())
+    && book.categoria.toLocaleLowerCase().includes(filters.categoria.toLocaleLowerCase())
+    && (filters.disponibilidad !== 'true' || book.stockDisponible > 0)
+    && (filters.disponibilidad !== 'false' || book.stockDisponible === 0)
+  ));
+
+  if (loading) return <div className="app-loading"><span className="loader" /><p>Preparando la biblioteca…</p></div>;
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+    <div className="app">
+      <div className="view-switcher" role="navigation" aria-label="Cambiar vista">
+        <button className={view === 'management' ? 'switch-button switch-button--active' : 'switch-button'} type="button" onClick={() => setView('management')}>Gestión</button>
+        <button className={view === 'catalog' ? 'switch-button switch-button--active' : 'switch-button'} type="button" onClick={() => setView('catalog')}>Catálogo público</button>
+      </div>
+      {error && <div className="global-error" role="alert"><span>⚠</span><div><strong>No se pudo cargar la biblioteca</strong><p>{error}</p></div><button type="button" onClick={refresh}>Reintentar</button></div>}
+      {view === 'management'
+        ? <LibrarianDashboard books={books} users={users} loans={loans} actions={actions} />
+        : <PublicCatalog books={catalogBooks} categories={[...new Set(books.map((book) => book.categoria))].sort((a, b) => a.localeCompare(b))} setFilters={setFilters} />}
+    </div>
+  );
 }
 
-export default App
+export default App;
