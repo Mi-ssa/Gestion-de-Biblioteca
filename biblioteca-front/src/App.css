@@ -1,19 +1,40 @@
 .app {
   min-height: 100vh;
-  padding-top: 38px;
 }
 
-.view-switcher {
-  position: fixed;
+.app-header {
+  position: sticky;
   z-index: 20;
-  top: 12px;
-  right: 18px;
+  top: 0;
   display: flex;
+  min-height: 66px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid #e9ece5;
+  padding: 8px max(4vw, 24px);
+  background: #ffffffed;
+  backdrop-filter: blur(12px);
+}
+
+.app-brand {
+  flex: 0 0 auto;
+  margin: 0;
+  border: 0;
   padding: 4px;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.app-navigation {
+  display: flex;
+  align-items: center;
+  gap: 5px;
   border: 1px solid #e9e6e0;
   border-radius: 999px;
+  padding: 4px;
   background: #fff;
-  box-shadow: 0 5px 20px #16201612;
 }
 
 .switch-button {
@@ -36,16 +57,16 @@
 .admin-shell {
   display: grid;
   grid-template-columns: 236px minmax(0, 1fr);
-  min-height: calc(100vh - 38px);
+  min-height: calc(100vh - 66px);
   color: #27352c;
   background: #f7f8f5;
 }
 
 .sidebar {
   position: sticky;
-  top: 0;
+  top: 66px;
   display: flex;
-  height: calc(100vh - 38px);
+  height: calc(100vh - 66px);
   flex-direction: column;
   padding: 30px 18px 20px;
   border-right: 1px solid #e8ebe5;
@@ -223,7 +244,7 @@ tbody tr:last-child td { border-bottom: 0; }
 .role-badge--docente { color: #87694b; background: #f7f0e6; }
 .role-badge--bibliotecario { color: #6d698e; background: #f0eff7; }
 
-.public-page { min-height: calc(100vh - 38px); background: #fafbf8; }
+.public-page { min-height: calc(100vh - 66px); background: #fafbf8; }
 .catalog-hero { position: relative; overflow: hidden; min-height: 355px; padding: 65px max(7vw, 30px) 45px; color: white; background: #304c39; }
 .catalog-hero::after { position: absolute; right: -5%; bottom: -55%; width: 66%; height: 125%; border: 1px solid #ffffff13; border-radius: 50%; content: ''; transform: rotate(-25deg); }
 .catalog-hero h1 { position: relative; z-index: 1; margin: 17px 0 13px; color: #fff; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(40px, 6vw, 67px); font-weight: 400; letter-spacing: -2px; line-height: .99; }
@@ -267,7 +288,7 @@ tbody tr:last-child td { border-bottom: 0; }
 .app-loading { display: grid; min-height: 100vh; place-content: center; justify-items: center; gap: 13px; color: #778274; background: #f7f8f5; font-size: 12px; }
 .loader { width: 25px; height: 25px; border: 2px solid #dfe7db; border-top-color: #527151; border-radius: 50%; animation: spin .8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.global-error { position: fixed; z-index: 30; top: 58px; left: 50%; display: flex; max-width: min(600px, calc(100% - 30px)); align-items: center; gap: 12px; border: 1px solid #ebc9be; border-radius: 7px; padding: 11px 14px; color: #844d40; background: #fff8f5; box-shadow: 0 8px 20px #391a1514; transform: translateX(-50%); }
+.global-error { position: fixed; z-index: 30; top: 78px; left: 50%; display: flex; max-width: min(600px, calc(100% - 30px)); align-items: center; gap: 12px; border: 1px solid #ebc9be; border-radius: 7px; padding: 11px 14px; color: #844d40; background: #fff8f5; box-shadow: 0 8px 20px #391a1514; transform: translateX(-50%); }
 .global-error > span { font-size: 18px; }
 .global-error strong { display: block; font-size: 11px; }
 .global-error p { margin-top: 3px; font-size: 10px; }
@@ -282,13 +303,9 @@ tbody tr:last-child td { border-bottom: 0; }
 }
 
 @media (max-width: 800px) {
-  .app { padding-top: 38px; }
   .admin-shell { grid-template-columns: 65px minmax(0, 1fr); }
   .sidebar { align-items: center; padding: 20px 7px; }
-  .brand { justify-content: center; margin: 3px 0 42px; }
-  .brand > span:last-child, .sidebar-label, .nav-item:not(.nav-item--active) { font-size: 0; }
-  .brand > span:last-child { display: none; }
-  .brand-mark { font-size: 25px; }
+  .sidebar-label, .nav-item:not(.nav-item--active) { font-size: 0; }
   .sidebar nav { width: 100%; }
   .nav-item { justify-content: center; padding: 12px 8px; font-size: 0; }
   .nav-icon { font-size: 17px; }
@@ -310,10 +327,14 @@ tbody tr:last-child td { border-bottom: 0; }
 }
 
 @media (max-width: 590px) {
-  .view-switcher { top: 7px; right: 8px; }
-  .switch-button { padding: 7px 10px; font-size: 10px; }
+  .app-header { min-height: 60px; gap: 8px; padding: 6px 10px; }
+  .app-brand { gap: 6px; font-size: 18px; }
+  .app-brand .brand-mark { font-size: 23px; }
+  .app-brand small { font-size: 6px; }
+  .app-navigation { gap: 2px; padding: 3px; }
+  .switch-button { padding: 7px 9px; font-size: 9px; }
   .admin-shell { grid-template-columns: 52px minmax(0, 1fr); }
-  .sidebar { height: calc(100vh - 38px); padding-right: 5px; padding-left: 5px; }
+  .sidebar { top: 60px; height: calc(100vh - 60px); padding-right: 5px; padding-left: 5px; }
   .topbar { height: 49px; padding: 0 13px; }
   .topbar > div { gap: 5px; font-size: 9px; }
   .topbar .button span { display: none; }
@@ -354,6 +375,6 @@ tbody tr:last-child td { border-bottom: 0; }
   .catalog-card-body h3 { font-size: 13px; }
   .availability { align-items: flex-start; font-size: 8px; }
   .site-footer { flex-direction: column; gap: 7px; padding: 17px; }
-  .global-error { align-items: flex-start; top: 48px; gap: 8px; padding: 9px; }
+  .global-error { align-items: flex-start; top: 68px; gap: 8px; padding: 9px; }
   .global-error button { margin-left: auto; }
 }

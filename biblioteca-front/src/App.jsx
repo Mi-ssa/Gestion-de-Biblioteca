@@ -6,6 +6,7 @@ import './App.css';
 
 function App() {
   const [view, setView] = useState('management');
+  const [dashboardKey, setDashboardKey] = useState(0);
   const [books, setBooks] = useState([]);
   const [users, setUsers] = useState([]);
   const [loans, setLoans] = useState([]);
@@ -67,6 +68,11 @@ function App() {
     returnLoan: (id) => refreshAfter(api.loans.returnBook(id)),
   };
 
+  const goHome = () => {
+    setView('management');
+    setDashboardKey((key) => key + 1);
+  };
+
   const catalogBooks = books.filter((book) => (
     book.titulo.toLocaleLowerCase().includes(filters.titulo.toLocaleLowerCase())
     && book.autor.toLocaleLowerCase().includes(filters.autor.toLocaleLowerCase())
@@ -79,13 +85,19 @@ function App() {
 
   return (
     <div className="app">
-      <div className="view-switcher" role="navigation" aria-label="Cambiar vista">
-        <button className={view === 'management' ? 'switch-button switch-button--active' : 'switch-button'} type="button" onClick={() => setView('management')}>Gestión</button>
-        <button className={view === 'catalog' ? 'switch-button switch-button--active' : 'switch-button'} type="button" onClick={() => setView('catalog')}>Catálogo público</button>
-      </div>
+      <header className="app-header">
+        <button className="brand app-brand" type="button" onClick={goHome} aria-label="Ir al inicio de la biblioteca">
+          <span className="brand-mark">◈</span>
+          <span>entre<span className="brand-accent">líneas</span><small>BIBLIOTECA ESCOLAR</small></span>
+        </button>
+        <nav className="app-navigation" aria-label="Secciones principales">
+          <button className={view === 'management' ? 'switch-button switch-button--active' : 'switch-button'} type="button" aria-current={view === 'management' ? 'page' : undefined} onClick={goHome}>Gestión</button>
+          <button className={view === 'catalog' ? 'switch-button switch-button--active' : 'switch-button'} type="button" aria-current={view === 'catalog' ? 'page' : undefined} onClick={() => setView('catalog')}>Catálogo público</button>
+        </nav>
+      </header>
       {error && <div className="global-error" role="alert"><span>⚠</span><div><strong>No se pudo cargar la biblioteca</strong><p>{error}</p></div><button type="button" onClick={refresh}>Reintentar</button></div>}
       {view === 'management'
-        ? <LibrarianDashboard books={books} users={users} loans={loans} actions={actions} />
+        ? <LibrarianDashboard key={dashboardKey} books={books} users={users} loans={loans} actions={actions} />
         : <PublicCatalog books={catalogBooks} categories={[...new Set(books.map((book) => book.categoria))].sort((a, b) => a.localeCompare(b))} setFilters={setFilters} />}
     </div>
   );

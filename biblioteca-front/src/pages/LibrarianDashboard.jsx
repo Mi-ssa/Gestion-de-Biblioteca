@@ -89,7 +89,6 @@ function LibrarianDashboard({ books, users, loans, actions }) {
   return (
     <div className="admin-shell">
       <aside className="sidebar">
-        <a href="#gestion" className="brand"><span className="brand-mark">◈</span><span>entre<span className="brand-accent">líneas</span><small>BIBLIOTECA ESCOLAR</small></span></a>
         <p className="sidebar-label">GESTIÓN</p>
         <nav aria-label="Navegación de gestión">
           {tabs.map((tab) => <button key={tab.id} type="button" className={`nav-item${section === tab.id ? ' nav-item--active' : ''}`} onClick={() => setSection(tab.id)}><span className="nav-icon">{tab.icon}</span>{tab.label}{tab.id === 'loans' && activeLoans.length > 0 && <span className="nav-count">{activeLoans.length}</span>}</button>)}
