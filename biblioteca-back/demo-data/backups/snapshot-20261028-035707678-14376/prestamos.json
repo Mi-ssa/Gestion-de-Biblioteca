@@ -1,0 +1,79 @@
+[
+  {
+    "id": "demo-loan-a-active",
+    "usuarioId": "demo-user-a",
+    "libroId": "lib-001",
+    "fechaPrestamo": "2026-10-12T21:53:21.125Z",
+    "fechaVencimiento": "2026-10-26T21:53:21.125Z",
+    "fechaDevolucion": null,
+    "diasRetraso": 0,
+    "multa": 0,
+    "estado": "activo"
+  },
+  {
+    "id": "demo-loan-b-active",
+    "usuarioId": "demo-user-b",
+    "libroId": "lib-002",
+    "fechaPrestamo": "2026-10-03T21:53:21.125Z",
+    "fechaVencimiento": "2026-10-17T21:53:21.125Z",
+    "fechaDevolucion": null,
+    "diasRetraso": 0,
+    "multa": 0,
+    "estado": "activo"
+  },
+  {
+    "id": "demo-loan-b-fine",
+    "usuarioId": "demo-user-b",
+    "libroId": "lib-002",
+    "fechaPrestamo": "2026-10-05T09:53:21.125Z",
+    "fechaVencimiento": "2026-10-19T09:53:21.125Z",
+    "fechaDevolucion": "2026-10-27T03:53:21.125Z",
+    "diasRetraso": 8,
+    "multa": 80,
+    "estado": "devuelto"
+  },
+  {
+    "id": "demo-loan-c-fine",
+    "usuarioId": "demo-user-c",
+    "libroId": "lib-001",
+    "fechaPrestamo": "2026-10-04T09:53:21.125Z",
+    "fechaVencimiento": "2026-10-18T09:53:21.125Z",
+    "fechaDevolucion": "2026-10-20T03:53:21.125Z",
+    "diasRetraso": 2,
+    "multa": 20,
+    "estado": "devuelto"
+  },
+  {
+    "id": "demo-loan-d-return",
+    "usuarioId": "demo-user-d",
+    "libroId": "lib-003",
+    "fechaPrestamo": "2026-10-11T21:53:21.125Z",
+    "fechaVencimiento": "2026-10-25T21:53:21.125Z",
+    "fechaDevolucion": null,
+    "diasRetraso": 0,
+    "multa": 0,
+    "estado": "activo"
+  },
+  {
+    "id": "demo-loan-e-fine",
+    "usuarioId": "demo-user-e",
+    "libroId": "lib-003",
+    "fechaPrestamo": "2026-10-10T09:53:21.125Z",
+    "fechaVencimiento": "2026-10-24T09:53:21.125Z",
+    "fechaDevolucion": "2026-10-27T03:53:21.125Z",
+    "diasRetraso": 3,
+    "multa": 30,
+    "estado": "devuelto"
+  },
+  {
+    "id": "demo-loan-f-paid",
+    "usuarioId": "demo-user-f",
+    "libroId": "lib-001",
+    "fechaPrestamo": "2026-10-04T09:53:21.125Z",
+    "fechaVencimiento": "2026-10-18T09:53:21.125Z",
+    "fechaDevolucion": "2026-10-23T03:53:21.125Z",
+    "diasRetraso": 5,
+    "multa": 50,
+    "estado": "devuelto"
+  }
+]

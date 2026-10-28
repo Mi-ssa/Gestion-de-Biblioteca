@@ -1,0 +1,44 @@
+{
+  "createdAt": "2026-10-28T03:53:21.125Z",
+  "isolatedDemoData": true,
+  "finePerDayMxn": 10,
+  "loanDays": 14,
+  "scenarios": {
+    "A": {
+      "userId": "demo-user-a",
+      "loanId": "demo-loan-a-active",
+      "status": "activo, vencido"
+    },
+    "B": {
+      "userId": "demo-user-b",
+      "activeLoanId": "demo-loan-b-active",
+      "fineLoanId": "demo-loan-b-fine",
+      "status": "bloqueado por multa y sanción temporal"
+    },
+    "C": {
+      "userId": "demo-user-c",
+      "loanId": "demo-loan-c-fine",
+      "status": "sanción vencida, deuda pendiente"
+    },
+    "D": {
+      "userId": "demo-user-d",
+      "loanId": "demo-loan-d-return",
+      "status": "activo, vencido, listo para devolver"
+    },
+    "E": {
+      "userId": "demo-user-e",
+      "loanId": "demo-loan-e-fine",
+      "status": "devuelto, multa pendiente"
+    },
+    "F": {
+      "userId": "demo-user-f",
+      "loanId": "demo-loan-f-paid",
+      "paymentId": "demo-payment-f",
+      "status": "multa pagada, sanción vigente"
+    },
+    "G": {
+      "userId": "demo-user-g",
+      "status": "sin deuda ni bloqueo"
+    }
+  }
+}

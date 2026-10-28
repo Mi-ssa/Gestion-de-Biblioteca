@@ -2,13 +2,23 @@ const { randomUUID } = require('node:crypto');
 const booksModel = require('../models/book.model');
 const usersModel = require('../models/user.model');
 const loansModel = require('../models/loan.model');
+const finePaymentsModel = require('../models/fine-payment.model');
 const withOperationLock = require('./operation-lock');
+const {
+  getPendingFineByUser,
+  getUserBlockingStatus,
+} = require('./fine-payment.service');
 
 const LOAN_DAYS = 14;
 const MAX_ACTIVE_LOANS = { estudiante: 3, docente: 5 };
-const FINE_PER_DAY = 5;
+const FINE_PER_DAY = 10;
+const MILLISECONDS_PER_DAY = 86400000;
 
-async function listLoans() {
+function calculateLateDays(dueDate, at) {
+  return Math.max(0, Math.ceil((at - new Date(dueDate)) / MILLISECONDS_PER_DAY));
+}
+
+async function listLoans(now = new Date()) {
   const [loans, books, users] = await Promise.all([
     loansModel.findAll(),
     booksModel.findAll(),
@@ -16,11 +26,21 @@ async function listLoans() {
   ]);
   const bookById = new Map(books.map((book) => [book.id, book]));
   const userById = new Map(users.map((user) => [user.id, user]));
-  return loans.map((loan) => ({
-    ...loan,
-    libro: bookById.get(loan.libroId) || null,
-    usuario: userById.get(loan.usuarioId) || null,
-  })).sort((a, b) => new Date(b.fechaPrestamo) - new Date(a.fechaPrestamo));
+  return loans.map((loan) => {
+    const enrichedLoan = {
+      ...loan,
+      libro: bookById.get(loan.libroId) || null,
+      usuario: userById.get(loan.usuarioId) || null,
+    };
+    if (loan.estado !== 'activo' || !(new Date(loan.fechaVencimiento) < now)) return enrichedLoan;
+
+    const diasRetrasoEstimados = calculateLateDays(loan.fechaVencimiento, now);
+    return {
+      ...enrichedLoan,
+      diasRetrasoEstimados,
+      multaEstimada: diasRetrasoEstimados * FINE_PER_DAY,
+    };
+  }).sort((a, b) => new Date(b.fechaPrestamo) - new Date(a.fechaPrestamo));
 }
 
 async function createLoan({ usuarioId, libroId }) {
@@ -28,11 +48,13 @@ async function createLoan({ usuarioId, libroId }) {
     if (!usuarioId || !libroId) {
       throw Object.assign(new Error('Debes seleccionar un usuario y un libro.'), { status: 400 });
     }
-    const [books, users, loans] = await Promise.all([
+    const [books, users, loans, payments] = await Promise.all([
       booksModel.findAll(),
       usersModel.findAll(),
       loansModel.findAll(),
+      finePaymentsModel.findAll(),
     ]);
+    const pendingFineByUser = getPendingFineByUser(loans, payments);
     const user = users.find((item) => item.id === usuarioId);
     const book = books.find((item) => item.id === libroId);
     if (!user) throw Object.assign(new Error('Usuario no encontrado.'), { status: 404 });
@@ -40,8 +62,14 @@ async function createLoan({ usuarioId, libroId }) {
     if (user.rol === 'bibliotecario') {
       throw Object.assign(new Error('Los bibliotecarios no pueden registrar préstamos como prestatarios.'), { status: 400 });
     }
-    if (user.bloqueadoHasta && new Date(user.bloqueadoHasta) > new Date()) {
-      throw Object.assign(new Error(`El usuario está bloqueado hasta el ${new Date(user.bloqueadoHasta).toLocaleDateString('es-MX')}.`), { status: 403 });
+    const pendingFine = pendingFineByUser.get(user.id) || 0;
+    const now = new Date();
+    const blockingStatus = getUserBlockingStatus(user, pendingFine, now);
+    if (blockingStatus.blocked) {
+      const blockMessage = blockingStatus.temporaryBlockUntil
+        ? `El usuario está bloqueado hasta el ${blockingStatus.temporaryBlockUntil.toLocaleDateString('es-MX')}.`
+        : 'El usuario mantiene una deuda pendiente y no puede recibir nuevos préstamos.';
+      throw Object.assign(new Error(blockMessage), { status: 403 });
     }
     if (book.stockDisponible <= 0) {
       throw Object.assign(new Error('No hay ejemplares disponibles de este libro.'), { status: 409 });
@@ -73,7 +101,7 @@ async function createLoan({ usuarioId, libroId }) {
   });
 }
 
-async function returnLoan(id) {
+async function returnLoan(id, now = new Date()) {
   return withOperationLock(async () => {
     const [loans, books, users] = await Promise.all([
       loansModel.findAll(),
@@ -86,9 +114,7 @@ async function returnLoan(id) {
     if (loan.estado !== 'activo') {
       throw Object.assign(new Error('Este préstamo ya fue devuelto.'), { status: 409 });
     }
-    const now = new Date();
-    const dueAt = new Date(loan.fechaVencimiento);
-    const daysLate = Math.max(0, Math.ceil((now - dueAt) / 86400000));
+    const daysLate = calculateLateDays(loan.fechaVencimiento, now);
     const fine = daysLate * FINE_PER_DAY;
     const userIndex = users.findIndex((user) => user.id === loan.usuarioId);
     const bookIndex = books.findIndex((book) => book.id === loan.libroId);

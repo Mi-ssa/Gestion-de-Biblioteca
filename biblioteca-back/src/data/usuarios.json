@@ -4,7 +4,7 @@
     "nombre": "Ana Martínez",
     "email": "ana.martinez@escuela.edu",
     "rol": "estudiante",
-    "bloqueadoHasta": null,
+    "bloqueadoHasta": "2026-10-26T06:09:26.169Z",
     "createdAt": "2026-01-10T09:00:00.000Z"
   },
   {
@@ -12,15 +12,47 @@
     "nombre": "Carlos Ruiz",
     "email": "carlos.ruiz@escuela.edu",
     "rol": "docente",
-    "bloqueadoHasta": null,
+    "bloqueadoHasta": "2026-11-02T06:09:35.802Z",
     "createdAt": "2026-01-11T09:00:00.000Z"
   },
   {
     "id": "usr-003",
     "nombre": "Lucía Fernández",
-    "email": "lucia.fernandez@escuela.edu",
+    "email": "lucia.fernandezz@escuela.edu",
     "rol": "bibliotecario",
     "bloqueadoHasta": null,
     "createdAt": "2026-01-12T09:00:00.000Z"
+  },
+  {
+    "id": "f5a7445a-8a04-4abc-a37d-1b21d05d2d87",
+    "nombre": "Josh",
+    "email": "josh@xd.com",
+    "rol": "bibliotecario",
+    "bloqueadoHasta": null,
+    "createdAt": "2026-10-26T05:50:26.959Z"
+  },
+  {
+    "id": "d7a9d801-c2af-4dfe-8d28-bcb8aa4bcf50",
+    "nombre": "francisco",
+    "email": "francisco@gmail.com",
+    "rol": "estudiante",
+    "bloqueadoHasta": null,
+    "createdAt": "2026-10-28T01:57:29.630Z"
+  },
+  {
+    "id": "0e9f4df0-def0-43f7-99c3-5f1e86796700",
+    "nombre": "eduardo",
+    "email": "edu@gmail.com",
+    "rol": "estudiante",
+    "bloqueadoHasta": null,
+    "createdAt": "2026-10-28T04:24:21.980Z"
+  },
+  {
+    "id": "35fa6ce5-3887-475a-9933-85d708daa3f4",
+    "nombre": "missa",
+    "email": "mis@gmail.com",
+    "rol": "estudiante",
+    "bloqueadoHasta": "2026-10-25T04:29:59.391Z",
+    "createdAt": "2026-10-28T04:28:15.506Z"
   }
 ]

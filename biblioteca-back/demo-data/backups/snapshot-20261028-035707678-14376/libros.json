@@ -1,0 +1,32 @@
+[
+  {
+    "id": "lib-001",
+    "isbn": "9788498387087",
+    "titulo": "Cien años de soledad",
+    "autor": "Gabriel García Márquez",
+    "categoria": "Novela",
+    "stockTotal": 5,
+    "stockDisponible": 4,
+    "createdAt": "2026-01-10T09:00:00.000Z"
+  },
+  {
+    "id": "lib-002",
+    "isbn": "9788437604947",
+    "titulo": "Don Quijote de la Mancha",
+    "autor": "Miguel de Cervantes",
+    "categoria": "Clásicos",
+    "stockTotal": 3,
+    "stockDisponible": 2,
+    "createdAt": "2026-01-12T09:00:00.000Z"
+  },
+  {
+    "id": "lib-003",
+    "isbn": "9786071614912",
+    "titulo": "El principito",
+    "autor": "Antoine de Saint-Exupéry",
+    "categoria": "Infantil",
+    "stockTotal": 4,
+    "stockDisponible": 3,
+    "createdAt": "2026-01-15T09:00:00.000Z"
+  }
+]

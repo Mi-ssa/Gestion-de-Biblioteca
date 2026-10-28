@@ -1,0 +1,66 @@
+[
+  {
+    "id": "usr-003",
+    "nombre": "Lucía Fernández",
+    "email": "lucia.fernandezz@escuela.edu",
+    "rol": "bibliotecario",
+    "bloqueadoHasta": null,
+    "createdAt": "2026-01-12T09:00:00.000Z"
+  },
+  {
+    "id": "demo-user-a",
+    "nombre": "Demo A - Vencido",
+    "email": "demo.a@entrel.example.test",
+    "rol": "estudiante",
+    "bloqueadoHasta": null,
+    "createdAt": "2026-10-28T03:53:21.125Z"
+  },
+  {
+    "id": "demo-user-b",
+    "nombre": "Demo B - Muy atrasado",
+    "email": "demo.b@entrel.example.test",
+    "rol": "estudiante",
+    "bloqueadoHasta": "2026-11-03T03:53:21.125Z",
+    "createdAt": "2026-10-28T03:53:21.125Z"
+  },
+  {
+    "id": "demo-user-c",
+    "nombre": "Demo C - Deuda después de sanción",
+    "email": "demo.c@entrel.example.test",
+    "rol": "docente",
+    "bloqueadoHasta": "2026-10-27T03:53:21.125Z",
+    "createdAt": "2026-10-28T03:53:21.125Z"
+  },
+  {
+    "id": "demo-user-d",
+    "nombre": "Demo D - Devolución pendiente",
+    "email": "demo.d@entrel.example.test",
+    "rol": "docente",
+    "bloqueadoHasta": null,
+    "createdAt": "2026-10-28T03:53:21.125Z"
+  },
+  {
+    "id": "demo-user-e",
+    "nombre": "Demo E - Multa pendiente",
+    "email": "demo.e@entrel.example.test",
+    "rol": "estudiante",
+    "bloqueadoHasta": null,
+    "createdAt": "2026-10-28T03:53:21.125Z"
+  },
+  {
+    "id": "demo-user-f",
+    "nombre": "Demo F - Pago con sanción vigente",
+    "email": "demo.f@entrel.example.test",
+    "rol": "docente",
+    "bloqueadoHasta": "2026-10-30T03:53:21.125Z",
+    "createdAt": "2026-10-28T03:53:21.125Z"
+  },
+  {
+    "id": "demo-user-g",
+    "nombre": "Demo G - Sin incidencias",
+    "email": "demo.g@entrel.example.test",
+    "rol": "estudiante",
+    "bloqueadoHasta": null,
+    "createdAt": "2026-10-28T03:53:21.125Z"
+  }
+]

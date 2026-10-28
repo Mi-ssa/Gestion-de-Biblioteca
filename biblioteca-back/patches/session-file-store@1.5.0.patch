@@ -1,0 +1,32 @@
+diff --git a/lib/session-file-helpers.js b/lib/session-file-helpers.js
+index 67cc5d3ed6ec21c7608e5384a0a183695e798f40..3da630ca1307fe2bc1928e355a50be25c068e738 100644
+--- a/lib/session-file-helpers.js
++++ b/lib/session-file-helpers.js
+@@ -175,8 +175,25 @@ var helpers = {
+         if (!err) {
+           var json;
+ 
+-          if (helpers.isSecret(options.secret))
+-            data = options.decoder(helpers.decrypt(options, data, sessionId));
++          if (helpers.isSecret(options.secret)) {
++            var plaintext;
++            try {
++              plaintext = helpers.decrypt(options, data, sessionId);
++            } catch (decryptError) {
++              if (decryptError === 'Encrypted session was tampered with!') {
++                return fs.remove(sessionPath, function (removeError) {
++                  if (removeError) {
++                    return callback(removeError);
++                  }
++
++                  return callback(null, null);
++                });
++              }
++
++              return callback(decryptError instanceof Error ? decryptError : new Error(String(decryptError)));
++            }
++            data = options.decoder(plaintext);
++          }
+ 
+           try {
+             json = options.decoder(data);

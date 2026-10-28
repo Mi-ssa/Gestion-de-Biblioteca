@@ -5,10 +5,10 @@
     "libroId": "lib-001",
     "fechaPrestamo": "2026-10-05T03:42:53.314Z",
     "fechaVencimiento": "2026-10-19T03:42:53.314Z",
-    "fechaDevolucion": null,
-    "diasRetraso": 0,
-    "multa": 0,
-    "estado": "activo"
+    "fechaDevolucion": "2026-10-26T06:09:26.169Z",
+    "diasRetraso": 8,
+    "multa": 40,
+    "estado": "devuelto"
   },
   {
     "id": "pre-002",
@@ -16,9 +16,42 @@
     "libroId": "lib-002",
     "fechaPrestamo": "2026-10-02T03:42:53.314Z",
     "fechaVencimiento": "2026-10-16T03:42:53.314Z",
+    "fechaDevolucion": "2026-10-26T06:09:35.802Z",
+    "diasRetraso": 11,
+    "multa": 55,
+    "estado": "devuelto"
+  },
+  {
+    "id": "4146ac80-6a3e-48e6-80de-5883607fdec6",
+    "usuarioId": "d7a9d801-c2af-4dfe-8d28-bcb8aa4bcf50",
+    "libroId": "89e5c489-0a03-45f9-a2db-a4fc33d37dc5",
+    "fechaPrestamo": "2026-10-18T04:15:43.546Z",
+    "fechaVencimiento": "2026-10-26T04:15:43.546Z",
     "fechaDevolucion": null,
     "diasRetraso": 0,
     "multa": 0,
     "estado": "activo"
+  },
+  {
+    "id": "4146ac80-6a3e-48e6-80de-5883607fdec6",
+    "usuarioId": "0e9f4df0-def0-43f7-99c3-5f1e86796700",
+    "libroId": "lib-002",
+    "fechaPrestamo": "2026-10-18T04:15:43.546Z",
+    "fechaVencimiento": "2026-10-22T04:15:43.546Z",
+    "fechaDevolucion": null,
+    "diasRetraso": 0,
+    "multa": 0,
+    "estado": "activo"
+  },
+  {
+    "id": "e497efe1-7198-4936-adbd-c568220b2176",
+    "usuarioId": "35fa6ce5-3887-475a-9933-85d708daa3f4",
+    "libroId": "89e5c489-0a03-45f9-a2db-a4fc33d37dc5",
+    "fechaPrestamo": "2026-10-09T04:28:22.223Z",
+    "fechaVencimiento": "2026-10-11T04:28:22.223Z",
+    "fechaDevolucion": "2026-10-28T04:29:59.391Z",
+    "diasRetraso": 18,
+    "multa": 180,
+    "estado": "devuelto"
   }
 ]

@@ -16,7 +16,7 @@
     "autor": "Miguel de Cervantes",
     "categoria": "Clásicos",
     "stockTotal": 3,
-    "stockDisponible": 2,
+    "stockDisponible": 3,
     "createdAt": "2026-01-12T09:00:00.000Z"
   },
   {
@@ -28,5 +28,15 @@
     "stockTotal": 4,
     "stockDisponible": 4,
     "createdAt": "2026-01-15T09:00:00.000Z"
+  },
+  {
+    "id": "89e5c489-0a03-45f9-a2db-a4fc33d37dc5",
+    "isbn": "978-172-2202-36",
+    "titulo": "XD",
+    "autor": "xd",
+    "categoria": "aaa",
+    "stockTotal": 11,
+    "stockDisponible": 9,
+    "createdAt": "2026-10-28T02:08:53.884Z"
   }
 ]

@@ -17,9 +17,29 @@ async function create(req, res) {
   }
 }
 
+async function configureAccess(req, res) {
+  try {
+    return res.status(201).json({
+      data: await service.configureAdminAccess(req.params.id, req.body, req.staffUser.id),
+    });
+  } catch (error) {
+    return sendError(res, error);
+  }
+}
+
+async function registerFinePayment(req, res) {
+  try {
+    return res.status(201).json({
+      data: await service.registerFinePayment(req.params.id, req.staffUser.id),
+    });
+  } catch (error) {
+    return sendError(res, error);
+  }
+}
+
 async function update(req, res) {
   try {
-    return res.json({ data: await service.updateUser(req.params.id, req.body) });
+    return res.json({ data: await service.updateUser(req.params.id, req.body, req.staffUser.id) });
   } catch (error) {
     return sendError(res, error);
   }
@@ -33,4 +53,4 @@ async function remove(req, res) {
   }
 }
 
-module.exports = { list, create, update, remove };
+module.exports = { list, create, configureAccess, registerFinePayment, update, remove };

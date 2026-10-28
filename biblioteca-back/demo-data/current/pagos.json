@@ -1,0 +1,16 @@
+[
+  {
+    "id": "demo-payment-f",
+    "userId": "demo-user-f",
+    "librarianId": "usr-003",
+    "method": "presencial",
+    "recordedAt": "2026-10-24T03:57:07.669Z",
+    "amount": 80,
+    "loans": [
+      {
+        "loanId": "demo-loan-f-paid",
+        "amount": 80
+      }
+    ]
+  }
+]

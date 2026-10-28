@@ -1,0 +1,2 @@
+patchedDependencies:
+  session-file-store@1.5.0: patches/session-file-store@1.5.0.patch
